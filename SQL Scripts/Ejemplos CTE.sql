@@ -113,3 +113,21 @@ FROM
 		SELECT ProductID, Name, Color, Class, Source FROM CTE_ProductL
 	) AS u
 
+WITH precio_total AS
+	(
+	SELECT ProductName, cte = 'CTE_1', SUM(UnitPrice) Tot_unit_price
+	FROM Products WHERE Discontinued = 1
+	GROUP BY ProductName
+	),
+	   tabla_2
+	AS 
+	(
+	SELECT ProductName, cte = 'CTE_2', SUM(UnitPrice) Tot_unit_price
+	FROM Products WHERE Discontinued = 0
+	GROUP BY ProductName
+	)
+
+	SELECT * FROM precio_total
+	UNION ALL
+	SELECT * FROM tabla_2
+
