@@ -51,3 +51,21 @@ SELECT
     (SELECT SUM(Autos_Vendidos) FROM Ventas WHERE Id_Auto = A.Id_auto) AS TotalAutosVendidosAuto
 FROM Ventas V
 INNER JOIN Autos A ON V.Id_Auto = A.Id_auto;
+
+
+CREATE VIEW dbo.[VW_Inventory_BI]
+AS
+SELECT 
+inv.*,
+stgwh.Description as StorageWareHouseName,
+stgwh.StorageLocation,
+pdt.ProductName,
+pdt.Weight,
+pdt.Category,
+pdt.SubCategory
+
+FROM Inventory inv
+LEFT JOIN
+StorageWareHouse stgwh on inv.StorageWareHouseId = stgwh.Id
+LEFT JOIN
+Products pdt on inv.ProductId = pdt.Id
